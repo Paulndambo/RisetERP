@@ -1,0 +1,48 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Users List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>Username</th>
+								<th>Email</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Report File</th>
+                <th>Date Reported</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for report in reports %}
+							<tr>
+                <td>{{report.id}}</td>
+								<td>{{report.name}}</td>
+                <td>{{report.email}}</td>
+                <td>{{report.title}}</td>
+                <td>{{report.description}}</td>
+								<td>
+									<a href="{{report.report_file.url}}">File</a>
+								</td>
+                <td>{{report.date_reported}}</td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

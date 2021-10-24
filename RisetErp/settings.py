@@ -130,4 +130,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 LOGOUT_REDIRECT_URL = "login"
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "dashboard"
