@@ -1,0 +1,46 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Expenses List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>title</th>
+								<th>Approved By</th>
+                <th>Recorded By</th>
+                <th>Expense File</th>
+                <th>Date Spend</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for expense in expenses %}
+							<tr>
+                <td>{{expense.id}}</td>
+								<td>{{expense.title}}</td>
+                <td>{{expense.approved_by}}</td>
+                <td>{{expense.recorded_by}}</td>
+                <td>
+                  <a href="{{expense.expense_pdf.url}}" class="btn btn-info">View Expense File</a>
+                </td>
+                <td>{{expense.date_spend}}</td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

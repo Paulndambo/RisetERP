@@ -1,0 +1,49 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Suppliers List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>Name</th>
+								<th class="d-none d-md-table-cell">Address</th>
+                <th class="d-none d-md-table-cell">Town</th>
+                <th class="d-none d-md-table-cell">Country</th>
+                <th colspan="2">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for supplier in suppliers %}
+							<tr>
+                <td>{{supplier.id}}</td>
+								<td>{{supplier.name}}</td>
+								<td class="">{{supplier.address}}</td>
+                <td class="">{{supplier.town}}</td>
+                <td class="">{{supplier.country}}</td>
+								<td class="">
+                  <a href="#" class="btn btn-primary">Update</a>
+                </td>
+								<td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

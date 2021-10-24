@@ -1,0 +1,47 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Promotion List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>Name</th>
+								<th>Description</th>
+                <th>Date Posted</th>
+                <th colspan="2">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for promotion in promotions %}
+							<tr>
+                <td>{{promotion.id}}</td>
+								<td>{{promotion.name}}</td>
+                <td>{{promotion.description}}</td>
+                <td>{{promotion.date_posted}}</td>
+								<td>
+                  <a href="#" class="btn btn-primary">Update</a>
+                </td>
+								<td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

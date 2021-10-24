@@ -1,0 +1,53 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Customers List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>Name</th>
+								<th>id_number</th>
+                <th>gender</th>
+                <th>Address</th>
+                <th>Town</th>
+                <th>Country</th>
+                <th colspan="2">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for customer in customers %}
+							<tr>
+                <td>{{customer.id}}</td>
+								<td>{{customer.name}}</td>
+                <td class="">{{customer.id_number}}</td>
+                <td class="">{{customer.gender}}</td>
+								<td class="">{{customer.address}}</td>
+                <td class="">{{customer.town}}</td>
+                <td class="">{{customer.country}}</td>
+								<td class="">
+                  <a href="#" class="btn btn-primary">Update</a>
+                </td>
+								<td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

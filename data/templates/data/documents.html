@@ -1,0 +1,49 @@
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Documents List</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>title</th>
+								<th>Document</th>
+                <th>Date Uploaded</th>
+                <th colspan="2">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for document in documents %}
+							<tr>
+                <td>{{document.id}}</td>
+								<td>{{document.title}}</td>
+								<td>
+									<a href="{{document.file.url}}" class="btn btn-info">Document File</a>
+								</td>
+                <td>{{document.date_uploaded}}</td>
+                <td>
+                  <a href="#" class="btn btn-primary">Update!</a>
+                </td>
+                <td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}
