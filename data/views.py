@@ -12,7 +12,7 @@ from django.shortcuts import (
     render, get_object_or_404, redirect
 )
 # Create your views here.
-class HomeView(ListView):
+class HomeView(LoginRequiredMixin, ListView):
     model = Item
     template_name = "home.html"
 
