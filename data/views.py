@@ -258,13 +258,7 @@ def payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
-            payment = form.save(commit=False)
-            order_items.update(ordered=True)
-            for item in order_items:
-                item.save()
-            order.ordered = True
-
-            payment.save()
+            form.save()
             return redirect("home")
     context = {
         "form": form,

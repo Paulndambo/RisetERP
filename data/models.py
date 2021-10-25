@@ -230,7 +230,7 @@ class Order(models.Model):
             sum_total = 0
             for item in order_total_items:
                 sum_total += item
-        return sum_total
+                return sum_total
 
 """
     def get_total(self):
