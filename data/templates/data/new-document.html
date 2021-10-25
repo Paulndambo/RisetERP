@@ -1,0 +1,38 @@
+{% extends "component-base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title mb-0">New Document</h5>
+							</div>
+							<div class="col-3">
+								<a href="{% url 'documents' %}" class="btn btn-secondary">Back To Documents</a>
+							</div>
+						</div>
+					</div>
+          <div class="card-text">
+            <form class="" action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+                {{form | crispy}}
+                <div class="text-center mt-3">
+                  <button type="submit" class="btn btn-lg btn-primary">SUBMIT DOCUMENT</button>
+                </div>
+            </form>
+          </div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

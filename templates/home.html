@@ -1,12 +1,55 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>RISET ERP</title>
-  </head>
-  <body>
-    <div class="">
-      <a href="{% url 'dashboard' %}">Go To Dashboard</a>
-    </div>
-  </body>
-</html>
+
+{% extends "component-base.html" %}
+{% block content %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title mb-0">Stock List</h5>
+							</div>
+							<div class="col-3">
+								<a href="{% url 'new-product' %}" class="btn btn-secondary">New Product</a>
+							</div>
+						</div>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+                <th>#</th>
+								<th>Name</th>
+								<th>Quantity</th>
+                <th>Price</th>
+                <th colspan="2">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+{% for item in object_list %}
+							<tr>
+                <td>{{item.id}}</td>
+								<td>{{item.name}}</td>
+                <td class="">{{item.quantity}}</td>
+                <td class="">{{item.price}}</td>
+								<td class="">
+                  <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Add To Cart</a>
+                </td>
+								<td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

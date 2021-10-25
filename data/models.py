@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.urls import reverse
 # Create your models here.
 GENDER_CHOICES = (
     ("Male", "Male"),
@@ -17,6 +18,9 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("suppliers")
 
 class Category(models.Model):
     title = models.CharField(max_length=200)
@@ -45,6 +49,9 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("customers")
+
 COUNTINENT_CHOICES = (
     ("ASIA", "ASIA"),
     ("EUROPE", "EUROPE"),
@@ -61,10 +68,14 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
-class Stock(models.Model):
+    def get_absolute_url(self):
+        return reverse("countries")
+
+class Item(models.Model):
     name = models.CharField(max_length=200)
     quantity = models.FloatField(default=0)
     price = models.FloatField()
+    discount_price = models.FloatField(default=0)
     re_order_level = models.FloatField(default=0)
     receive_amount = models.FloatField(default=0)
     sell_amount = models.FloatField(default=0)
@@ -72,12 +83,31 @@ class Stock(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
+    slug = models.SlugField(blank=True, null=True)
 
     def stock_price(self):
         return self.quantity * self.price
 
+    #def get_absolute_url(self):
+    #    return reverse("products")
+
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("product", kwargs={
+            'slug': self.slug
+        })
+
+    def get_add_to_cart_url(self):
+        return reverse("add-to-cart", kwargs={
+            'slug': self.slug
+        })
+
+    def get_remove_from_cart_url(self):
+        return reverse("remove-from-cart", kwargs={
+            'slug': self.slug
+        })
 
 class Promotion(models.Model):
     name = models.CharField(max_length=200)
@@ -87,6 +117,9 @@ class Promotion(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("promotions")
 
 class Report(models.Model):
     name = models.CharField(max_length=200)
@@ -105,6 +138,9 @@ class Report(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("reports")
+
 class Document(models.Model):
     title = models.CharField(max_length=200)
     file = models.FileField(upload_to="documents")
@@ -112,6 +148,9 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("documents")
 
 class Expense(models.Model):
     title = models.CharField(max_length=200)
@@ -129,6 +168,9 @@ class Expense(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("expenses")
+
 class PaymentOption(models.Model):
     title = models.CharField(max_length=200)
     number = models.CharField(max_length=200)
@@ -137,3 +179,71 @@ class PaymentOption(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class OrderItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    item = models.ForeignKey(
+        Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    ordered = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"{self.quantity} of {self.item.name}"
+
+    def get_total_item_price(self):
+        return self.quantity * self.item.price
+
+    def get_total_discount_item_price(self):
+        return self.quantity * self.item.discount_price
+
+    def get_amount_saved(self):
+        return self.get_total_item_price() - self.get_total_discount_item_price()
+
+    def get_final_price(self):
+        if self.item.discount_price:
+            return self.get_total_discount_item_price()
+        return self.get_total_item_price
+
+    def get_item_total(self):
+        return self.item.price * self.quantity
+
+
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    items = models.ManyToManyField(OrderItem)
+    start_date = models.DateTimeField(
+        auto_now_add=True)
+    ordered_date = models.DateTimeField()
+    ordered = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.user.username
+
+    def order_total(self):
+        order_total_items = []
+        for order_item in self.items.all():
+            order_total_items.append(order_item.get_item_total())
+            print(order_total_items)
+            sum_total = 0
+            for item in order_total_items:
+                sum_total += item
+        return sum_total
+
+"""
+    def get_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total = total + order_item.get_final_price()
+        return total
+"""
+
+class Payment(models.Model):
+    amount = models.FloatField(default=0)
+    payment_method = models.ForeignKey(PaymentOption, on_delete=models.SET_NULL, null=True)
+    date_paid = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.amount)

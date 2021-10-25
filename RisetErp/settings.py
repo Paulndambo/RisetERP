@@ -40,7 +40,10 @@ INSTALLED_APPS = [
 
     'data',
     'accounts',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,3 +134,5 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 LOGOUT_REDIRECT_URL = "login"
 LOGIN_REDIRECT_URL = "dashboard"
+
+DEFAUT_AUTO_FIELD = 'django.db.models.BigAutoField'

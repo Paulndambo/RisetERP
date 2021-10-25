@@ -8,6 +8,14 @@ from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
 
+def users_list(request):
+    users = User.objects.all()
+    context = {
+        "users": users
+    }
+    return render(request, "accounts/users.html", context)
+
+
 def login_view(request):
     form = LoginForm(request.POST or None)
 
