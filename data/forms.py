@@ -3,14 +3,14 @@ from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from . models import Payment, PaymentOption
 
-choices = PaymentOption.objects.all().values_list('title', 'title')
-payment_choices = []
-for choice in choices:
-    payment_choices.append(choice)
+#choices = PaymentOption.objects.all().values_list('title', 'title')
+#payment_choices = []
+#for choice in choices:
+#    payment_choices.append(choice)
 
 PAYMENT_CHOICES = (
-    ('S', 'Stripe'),
-    ('P', 'PayPal'),
+    ('Stripe', 'Stripe'),
+    ('PayPal', 'PayPal'),
     ('M-pesa', 'M-pesa'),
     ('Cash', 'Cash'),
     ('Airtel Money', 'Airtel Money'),
