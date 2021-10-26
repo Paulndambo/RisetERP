@@ -22,9 +22,24 @@
             <form class="" action="" method="post" enctype="multipart/form-data">
               {% csrf_token %}
                 {{form | crispy}}
-                <div class="text-center mt-3">
-                  <button type="submit" class="btn btn-lg btn-primary">SUBMIT PAYMENT</button>
-                </div>
+								<div class="row">
+									<div class="col-4">
+										<div class="text-center mt-3">
+		                  <button type="submit" onclick="cashPayment()" class="btn btn-lg btn-primary">PAY WITH CASH</button>
+		                </div>
+									</div>
+									<div class="col-4">
+										<div class="text-center mt-3">
+		                  <button type="submit" onclick="mpesaTransfer()" class="btn btn-lg btn-success">PAY VIA MPESA</button>
+		                </div>
+									</div>
+									<div class="col-4">
+										<div class="text-center mt-3">
+
+		                  <button type="submit" onclick="bankTransfer()" class="btn btn-lg btn-secondary">BANK TRANSFER</button>
+		                </div>
+									</div>
+								</div>
             </form>
           </div>
 				</div>
@@ -33,6 +48,16 @@
 
 	</div>
 </main>
-
+<script>
+	function bankTransfer() {
+		alert("Paid using Bank Transfer")
+	}
+	function cashPayment() {
+		alert("Paid using cash")
+	}
+	function mpesaTransfer() {
+		alert("Paid using Mpesa Transfer")
+	}
+</script>
 
 {% endblock content %}
