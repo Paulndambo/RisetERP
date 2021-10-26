@@ -21,7 +21,7 @@ urlpatterns = [
 
 
     #create views
-    path("new-product/", NewProduct.as_view(), name="new-product"),
+    path("new-product/", views.new_product, name="new-product"),
     path("new-supplier/", NewSupplier.as_view(), name="new-supplier"),
     path("new-promotion/", NewPromotion.as_view(), name="new-promotion"),
     path("new-customer/", NewCustomer.as_view(), name="new-customer"),
