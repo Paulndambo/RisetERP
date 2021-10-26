@@ -22,6 +22,8 @@ class ItemForm(forms.ModelForm):
         model = Item
         fields = "__all__"
 
+        exclude = ["receive_amount", "sell_amount", "date_added", "date_updated", "slug"]
+
 
 class CheckoutForm(forms.Form):
     payment_option = forms.ChoiceField(
