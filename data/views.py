@@ -5,9 +5,10 @@ from django.views.generic import ListView, CreateView, DetailView, View, Templat
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm, PaymentForm
+from .forms import CheckoutForm, PaymentForm, ItemForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.shortcuts import (
     render, get_object_or_404, redirect
 )
@@ -160,6 +161,21 @@ class NewProduct(CreateView):
     model = Item
     fields = ["name", "quantity", "price", "re_order_level", "supplier", "category"]
     template_name = "data/new-product.html"
+    success_url = reverse_lazy("products")
+
+def new_product(request):
+    form = ItemForm()
+    if request.method == "POST":
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.slug = item.name
+            item.save()
+            return redirect("products")
+    context = {
+        "form": form
+    }
+    return render(request, "data/new-product.html", context)
 
 class NewSupplier(CreateView):
     model = Supplier
