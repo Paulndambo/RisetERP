@@ -1,7 +1,7 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from . models import Payment, PaymentOption
+from . models import Payment, PaymentOption, Item
 
 #choices = PaymentOption.objects.all().values_list('title', 'title')
 #payment_choices = []
@@ -16,6 +16,11 @@ PAYMENT_CHOICES = (
     ('Airtel Money', 'Airtel Money'),
     ('T-kash', 'T-kash'),
 )
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = "__all__"
 
 
 class CheckoutForm(forms.Form):
